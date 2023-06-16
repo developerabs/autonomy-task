@@ -20,7 +20,4 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-
-Route::get('jobs',[HomeController::class, 'allJobs'])->name('allJobs');
-Route::get('job-details/{id}/{slug}',[HomeController::class, 'jobDetails'])->name('jobDetails');
-Route::get('apply-job/{id}/{slug}',[HomeController::class, 'applyJob'])->name('applyJob');
+ 
