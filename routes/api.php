@@ -18,7 +18,4 @@ use App\Http\Controllers\Api\JobController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-}); 
-Route::get('all-jobs',[JobController::class, 'index']);
-Route::post('job-details-data',[JobController::class, 'jobDetailsData']);
-Route::post('job-search',[JobController::class, 'jobSearch']);
+});  

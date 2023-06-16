@@ -79,7 +79,7 @@
        
             $(document).on('click','#delete',function(e){
              e.preventDefault();
-             var link = $(this).attr("href");
+             var link = $(this).attr("zz");
                      Swal.fire({
                      title: 'Are you sure?',
                      text: "You want to delete this data!",
@@ -129,22 +129,6 @@
 
                 
             </script>
-            <script>
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                function jobStatusChange(id){
-                    $.ajax({
-                    type:'GET',
-                    url:"{{ route('jobs.statusCtanges') }}",
-                    data:{id:id},
-                    success:function(data){
-                        toastr.info(data.success); 
-                    }
-                    });
-                }
-            </script>
+         
     </body>
 </html>
