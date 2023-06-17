@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductReuest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -20,11 +21,24 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('categories')->paginate(10);
+        $name = null;
+        $category = null;
+        $products = Product::with('categories');
+        if ($request->has('name')){
+            $name = $request->name; 
+            $products = $products->where('name', 'like', '%'.$name.'%');
+        } 
+        if ($request->has('category')){ 
+            $category = $request->category;
+            $products = $products->whereHas('categories', function ($query) use ($category) {
+                $query->where('cat_name', 'like', '%'.$category.'%');
+            });
+        }
+        $products = $products->paginate(10);
         // return $products;
-        return view('backend.product.index', compact('products'));
+        return view('backend.product.index', compact('products','name','category'));
     }
 
     /**
@@ -46,26 +60,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required',
-            'categories' => 'required',
-            'unit_price' => 'required',
-            'stock' => 'required',
-            'unit' => 'required',
-            'min_qty' => 'required',
-        ]);
-        
+    public function store(StoreProductReuest $request)
+    {   
+        DB::beginTransaction();
+  
         try {
-  
-            /*------------------------------------------
-            --------------------------------------------
-            Start DB Transaction
-            --------------------------------------------
-            --------------------------------------------*/
-            DB::beginTransaction();
-  
             // store products 
             $product = new Product();
             $product->name = $request->name;
@@ -97,22 +96,11 @@ class ProductController extends Controller
                 $productCategory->save();
             }
             
-
-
-            /*------------------------------------------
-            --------------------------------------------
-            Commit Transaction to Save Data to Database
-            --------------------------------------------
-            --------------------------------------------*/
+ 
             DB::commit();
               
         } catch (Exception $e) {
-  
-            /*------------------------------------------
-            --------------------------------------------
-            Rollback Database Entry
-            --------------------------------------------
-            --------------------------------------------*/
+   
             DB::rollback();
             throw $e;
         }
