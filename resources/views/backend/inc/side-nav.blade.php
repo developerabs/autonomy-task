@@ -40,7 +40,7 @@
                                         ></path>
                                     </svg>
                                 </span>
-                                <span class="sa-nav__title">Category</span>
+                                <span class="sa-nav__title">Categories</span>
                             </a>
                         </li>
                         <li class="sa-nav__menu-item sa-nav__menu-item--has-icon">

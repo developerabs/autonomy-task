@@ -19,7 +19,19 @@
             </div>
         </div>
         <div class="card"> 
-            {{-- <form action="{{ route('categories.index') }}" method="get"><input name="search" value="{{ $search }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...."/></form> --}}
+            <form action="{{ route('products.index') }}" method="get">
+                <div class="row m-4">
+                    <div class="col-sm-3">
+                        <input name="name" value="{{ $name }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name...."/>
+                    </div>
+                    <div class="col-sm-3">
+                        <input name="category" value="{{ $category }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Category...."/>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
             <div class="sa-example my-5">
                 <div class="sa-example__legend">All Products</div>
                 <div class="sa-example__body">
@@ -47,12 +59,8 @@
                                     </td>
                                     <td>{{ $product->unit_price }}</td>
                                     <td>{{ $product->stock }}</td>
-                                    <td>
-                                        @if ($product->status == 1)
-                                        <span class="badge badge-sa-pill badge-sa-success">Active</span>
-                                        @else
-                                        <span class="badge badge-sa-pill badge-sa-warning">Inactive</span>
-                                        @endif
+                                    <td>  
+                                        <?php echo $product->status == 1 ? '<span class="badge badge-sa-pill badge-sa-success">Active</span>' : '<span class="badge badge-sa-pill badge-sa-warning">Inactive</span>'; ?>
                                     </td>
                                     <td>
                                     {{-- product edit button --}}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCategoryReuest;
 use Illuminate\Support\Str;
 use App\Models\Category;
 
@@ -48,12 +49,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'cat_name' => 'required',
-            'status' => 'required',
-        ]);
+    public function store(StoreCategoryReuest $request)
+    { 
 
         $category = new Category();
         $category->cat_name = $request->cat_name;
