@@ -10,19 +10,19 @@
                     <nav class="mb-2" aria-label="breadcrumb">
                         <ol class="breadcrumb breadcrumb-sa-simple">
                             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Add New Categories</li>
+                            <li class="breadcrumb-item active" aria-current="page">Add New Products</li>
                         </ol>
                     </nav>
-                    <h1 class="h3 m-0">Add New Categories</h1>
+                    <h1 class="h3 m-0">Add New Products</h1>
                 </div>
-                <div class="col-auto d-flex"><a href="{{ route('categories.index') }}" class="btn btn-primary">Back</a></div>
+                <div class="col-auto d-flex"><a href="{{ route('products.index') }}" class="btn btn-primary">Back</a></div>
             </div>
         </div>
         <div class="card">  
             <div class="sa-example my-5">
                 <div class="sa-example__legend">Add New</div>
                 <div class="sa-example__body">
-                    <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -34,14 +34,14 @@
                             </div>
                         @endif
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Category Name</label> 
-                            <div class="col-sm-10"><input name="cat_name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Category Name"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Name</label> 
+                            <div class="col-sm-10"><input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Product Name"/></div>
                         </div>
                         <div class="row mb-4">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Parent Category</label>
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Categories</label>
                             <div class="col-sm-10">
-                                <select name="parent_id" class="form-select sa-select2 mt-3">
-                                    <option selected="" disabled>No Parent</option>
+                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                    <option disabled>Select Categories</option>
                                     {{-- main category loop --}}
                                     @foreach ($categories as $category) 
                                         <option value="{{ $category->id }}">{{ $category->cat_name }}</option>
@@ -62,6 +62,18 @@
                             </div>
                         </div>
                         <div class="row mb-4">
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Unit Price</label> 
+                            <div class="col-sm-10"><input name="unit_price" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Unit Price"/></div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Purchase Price</label> 
+                            <div class="col-sm-10"><input name="purchase_price" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Purchase Price"/></div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Stock</label> 
+                            <div class="col-sm-10"><input name="stock" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Stock Number"/></div>
+                        </div>
+                        <div class="row mb-4">
                             <label for="formGroupExampleInput" class="col-sm-2 form-label">Banner</label> 
                             <div class="col-sm-10"><input name="banner" type="file" class="form-control" id="formFile-3-normal" accept=".jpg,.jpeg,.png"/></div>
                         </div>
@@ -76,6 +88,30 @@
                         <div class="row mb-4">
                             <label for="formGroupExampleInput" class="col-sm-2 form-label">Description</label> 
                             <div class="col-sm-10"><textarea name="description" placeholder="Enter Description" class="form-control" rows="4"></textarea></div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Size</label>
+                            <div class="col-sm-10">
+                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                    <option disabled>Select Sizes</option>
+                                    {{-- main category loop --}}
+                                    @foreach ($sizes as $size) 
+                                        <option value="{{ $size->id }}">{{ $size->name }}</option> 
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Color</label>
+                            <div class="col-sm-10">
+                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                    <option disabled>Select Color</option>
+                                    {{-- main category loop --}}
+                                    @foreach ($colors as $color) 
+                                        <option value="{{ $color->id }}">{{ $color->name }}</option> 
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <fieldset class="row mb-4">
                             <legend class="col-form-label col-sm-2 pt-0">Status</legend>
