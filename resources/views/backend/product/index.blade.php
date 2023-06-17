@@ -54,7 +54,45 @@
                                         <span class="badge badge-sa-pill badge-sa-warning">Inactive</span>
                                         @endif
                                     </td>
-                                    <td>a</td>
+                                    <td>
+                                    {{-- product edit button --}}
+                                    <a href="" class="btn btn-primary btn-sm" style="float:left">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="1em"
+                                            height="1em"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="feather feather-cast"
+                                        >
+                                            <path
+                                                d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"
+                                            ></path>
+                                            <line x1="2" y1="20" x2="2.01" y2="20"></line>
+                                        </svg></a>
+                                    {{-- product delete button  --}}
+                                    <form action="{{ route('products.destroy',$product->id) }}" method="post" onsubmit="return confirm('Do you want to delete this?')">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-danger btn-sm" > 
+                                            <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="12"
+                                            height="12"
+                                            viewBox="0 0 12 12"
+                                            fill="currentColor"
+                                        >
+                                            <path
+                                                d="M10.8,10.8L10.8,10.8c-0.4,0.4-1,0.4-1.4,0L6,7.4l-3.4,3.4c-0.4,0.4-1,0.4-1.4,0l0,0c-0.4-0.4-0.4-1,0-1.4L4.6,6L1.2,2.6 c-0.4-0.4-0.4-1,0-1.4l0,0c0.4-0.4,1-0.4,1.4,0L6,4.6l3.4-3.4c0.4-0.4,1-0.4,1.4,0l0,0c0.4,0.4,0.4,1,0,1.4L7.4,6l3.4,3.4 C11.2,9.8,11.2,10.4,10.8,10.8z"
+                                            ></path>
+                                        </svg>
+                                        </button>
+                                    </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             
