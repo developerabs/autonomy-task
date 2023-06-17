@@ -34,13 +34,13 @@
                             </div>
                         @endif
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Name</label> 
-                            <div class="col-sm-10"><input name="name" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Product Name"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Name*</label> 
+                            <div class="col-sm-10"><input name="name" value="{{ old('name') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Product Name"/></div>
                         </div>
                         <div class="row mb-4">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Categories</label>
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Categories*</label>
                             <div class="col-sm-10">
-                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                <select name="categories[]" class="form-select sa-select2 mt-3" multiple>
                                     <option disabled>Select Categories</option>
                                     {{-- main category loop --}}
                                     @foreach ($categories as $category) 
@@ -62,37 +62,45 @@
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Unit Price</label> 
-                            <div class="col-sm-10"><input name="unit_price" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Unit Price"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Unit Price*</label> 
+                            <div class="col-sm-10"><input name="unit_price" value="{{ old('unit_price') }}" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Unit Price"/></div>
                         </div>
                         <div class="row mb-4">
                             <label for="formGroupExampleInput" class="col-sm-2 form-label">Purchase Price</label> 
-                            <div class="col-sm-10"><input name="purchase_price" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Purchase Price"/></div>
+                            <div class="col-sm-10"><input name="purchase_price" value="{{ old('purchase_price') }}" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Purchase Price"/></div>
                         </div>
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Stock</label> 
-                            <div class="col-sm-10"><input name="stock" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Stock Number"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Stock*</label> 
+                            <div class="col-sm-10"><input name="stock" value="{{ old('stock') }}" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Stock Quentity"/></div>
                         </div>
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Banner</label> 
-                            <div class="col-sm-10"><input name="banner" type="file" class="form-control" id="formFile-3-normal" accept=".jpg,.jpeg,.png"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Thumbnail*</label> 
+                            <div class="col-sm-10"><input name="thumbnail_img" type="file" class="form-control" id="formFile-3-normal" accept=".jpg,.jpeg,.png"/></div>
                         </div>
                         <div class="row mb-4">
-                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Icon</label> 
-                            <div class="col-sm-10"><input name="icon" type="file" class="form-control" id="formFile-3-normal" accept=".jpg,.jpeg,.png"/></div>
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Photos</label> 
+                            <div class="col-sm-10"><input name="photos" type="file" class="form-control" id="formFile-3-normal" accept=".jpg,.jpeg,.png"/></div>
                         </div>
                         <div class="row mb-4">
                             <label for="formGroupExampleInput" class="col-sm-2 form-label">Title</label> 
-                            <div class="col-sm-10"><input name="title" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Title"/></div>
+                            <div class="col-sm-10"><input name="title" value="{{ old('title') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Title"/></div>
                         </div>
                         <div class="row mb-4">
                             <label for="formGroupExampleInput" class="col-sm-2 form-label">Description</label> 
-                            <div class="col-sm-10"><textarea name="description" placeholder="Enter Description" class="form-control" rows="4"></textarea></div>
+                            <div class="col-sm-10"><textarea name="description" placeholder="Enter Description" class="form-control" rows="4">{{ old('description') }}</textarea></div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Unit*</label> 
+                            <div class="col-sm-10"><input name="unit" value="pcs" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Unit Name"/></div>
+                        </div>
+                        <div class="row mb-4">
+                            <label for="formGroupExampleInput" class="col-sm-2 form-label">Minimun Quentity*</label> 
+                            <div class="col-sm-10"><input name="min_qty" value="1" type="number" class="form-control" id="formGroupExampleInput" placeholder="Enter Minimun Quentity"/></div>
                         </div>
                         <div class="row mb-4">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Size</label>
                             <div class="col-sm-10">
-                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                <select name="sizes[]" class="form-select sa-select2 mt-3" multiple>
                                     <option disabled>Select Sizes</option>
                                     {{-- main category loop --}}
                                     @foreach ($sizes as $size) 
@@ -104,7 +112,7 @@
                         <div class="row mb-4">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Color</label>
                             <div class="col-sm-10">
-                                <select name="parent_id" class="form-select sa-select2 mt-3" multiple>
+                                <select name="colors[]" class="form-select sa-select2 mt-3" multiple>
                                     <option disabled>Select Color</option>
                                     {{-- main category loop --}}
                                     @foreach ($colors as $color) 
