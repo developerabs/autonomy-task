@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->integer('parent_id');
             $table->integer('level');
             $table->string('cat_name');
-            $table->string('slug')->nullable();
+            $table->string('slug');
             $table->string('icon')->nullable();
             $table->string('banner')->nullable();
             $table->tinyInteger('featured')->default(0)->comment("'0' = 'non-featured', '1' = 'featured'");

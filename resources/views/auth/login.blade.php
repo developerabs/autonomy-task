@@ -4,8 +4,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="format-detection" content="telephone=no" />
-        <title>Job Portal</title>
+        <meta name="format-detection" content="telephone=no" /> 
+        <title>Automomy task product manage</title>
         <!-- icon -->
         <link rel="icon" type="image/png" href="images/favicon.png" />
         <!-- fonts -->
