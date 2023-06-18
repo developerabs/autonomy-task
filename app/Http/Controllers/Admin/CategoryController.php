@@ -16,20 +16,28 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $search =null;
-        $categories = Category::with('subCategoriy')->where('parent_id', '=', 0);
-        if ($request->has('search')){
-            $search = $request->search;
-            $categories = $categories->where('cat_name', 'like', '%'.$search.'%')
-            ->orWhereHas('subCategoriy', function ($query) use ($search) {
-                $query->where('cat_name', 'like', '%'.$search.'%');
-            });
+    { 
+        $categories = Category::with('subCategoriy')->where('parent_id', '=', 0)
+                        ->when($request->has('search'), function ($query) {
+                            $query->where('cat_name', 'like', '%'.request('search').'%')
+                            ->orWhereHas('subCategoriy', function ($query) {
+                                $query->where('cat_name', 'like', '%'.request('search').'%');
+                            });
+                        });
 
-        }
+        // $categories = Category::with('subCategoriy')->where('parent_id', '=', 0);
+        // if ($request->has('search')){
+        //     $search = $request->search;
+        //     $categories = $categories->where('cat_name', 'like', '%'.$search.'%')
+        //     ->orWhereHas('subCategoriy', function ($query) use ($search) {
+        //         $query->where('cat_name', 'like', '%'.$search.'%');
+        //     });
+
+        // }
+        
         $categories = $categories->paginate(10);
         // return $categories;
-        return view('backend.category.index', compact('categories','search'));
+        return view('backend.category.index', compact('categories'));
     }
 
     /**

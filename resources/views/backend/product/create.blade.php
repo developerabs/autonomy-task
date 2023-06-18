@@ -100,7 +100,7 @@
                         <div class="row mb-4">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Size</label>
                             <div class="col-sm-10">
-                                <select name="sizes[]" class="form-select sa-select2 mt-3" multiple>
+                                <select name="size[]" class="form-select sa-select2 mt-3" multiple>
                                     <option disabled>Select Sizes</option>
                                     {{-- main category loop --}}
                                     @foreach ($sizes as $size) 
@@ -112,7 +112,7 @@
                         <div class="row mb-4">
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Color</label>
                             <div class="col-sm-10">
-                                <select name="colors[]" class="form-select sa-select2 mt-3" multiple>
+                                <select name="color[]" class="form-select sa-select2 mt-3" multiple>
                                     <option disabled>Select Color</option>
                                     {{-- main category loop --}}
                                     @foreach ($colors as $color) 

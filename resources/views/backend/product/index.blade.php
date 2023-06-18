@@ -22,10 +22,10 @@
             <form action="{{ route('products.index') }}" method="get">
                 <div class="row m-4">
                     <div class="col-sm-3">
-                        <input name="name" value="{{ $name }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name...."/>
+                        <input name="name" value="{{ request('name') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Name...."/>
                     </div>
                     <div class="col-sm-3">
-                        <input name="category" value="{{ $category }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Category...."/>
+                        <input name="category" value="{{ request('category') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Category...."/>
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-primary">Search</button>
@@ -39,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th class="w-min" >SL</th>
-                                <th class="min-w-10x">Name</th>
+                                <th class="w-10x">Name</th>
                                 <th>Categories</th>
                                 <th>Unit Price</th>
                                 <th>Stock</th> 
@@ -64,7 +64,7 @@
                                     </td>
                                     <td>
                                     {{-- product edit button --}}
-                                    <a href="" class="btn btn-primary btn-sm" style="float:left">
+                                    <a href="{{ route('products.edit',$product->id) }}" class="btn btn-primary btn-sm" style="float:left">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             width="1em"
