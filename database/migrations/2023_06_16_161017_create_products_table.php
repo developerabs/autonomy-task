@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->double('unit_price');
             $table->double('purchase_price')->nullable();
             $table->string('size')->nullable();
-            $table->string('colors')->nullable();
-            $table->string('photos',2000)->nullable();
+            $table->string('color')->nullable();
+            $table->string('photo',2000)->nullable();
             $table->string('thumbnail_img');
             $table->string('tags',1000)->nullable(); 
             $table->tinyInteger('featured')->default(0)->comment("'0' = 'non-featured', '1' = 'featured'"); 

@@ -22,23 +22,19 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $name = null;
-        $category = null;
-        $products = Product::with('categories');
-        if ($request->has('name')){
-            $name = $request->name; 
-            $products = $products->where('name', 'like', '%'.$name.'%');
-        } 
-        if ($request->has('category')){ 
-            $category = $request->category;
-            $products = $products->whereHas('categories', function ($query) use ($category) {
-                $query->where('cat_name', 'like', '%'.$category.'%');
-            });
-        }
+    { 
+        $products = Product::with('categories')->latest()
+                    ->when($request->has('name'), function ($query) {
+                        $query->where('name', 'like', '%'.request('name').'%');
+                    })
+                    ->when($request->has('category'), function ($query) {
+                        $query->whereHas('categories', function ($query) {
+                            $query->where('cat_name', 'like', '%'.request('category').'%');
+                        });
+                    }); 
         $products = $products->paginate(10);
         // return $products;
-        return view('backend.product.index', compact('products','name','category'));
+        return view('backend.product.index', compact('products'));
     }
 
     /**
@@ -80,11 +76,11 @@ class ProductController extends Controller
             $product->unit = $request->unit;
             $product->min_qty = $request->min_qty;
     
-            if ($request->sizes != null) {
-                $product->size = json_encode($request->sizes);
+            if ($request->size != null) {
+                $product->size = $request->size;
             }
-            if ($request->colors != null) {
-                $product->colors = json_encode($request->colors);
+            if ($request->color != null) {
+                $product->color = $request->color;
             }
             $product->save();
 
@@ -132,7 +128,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::with('categories')->findOrFail($id);
+        $categories = Category::with('subCategoriy')->where('parent_id', '=', 0)->get();
+        $sizes = Size::get();
+        $colors = Color::get();
+        // return $product;
+        return view('backend.product.edit', compact('product','categories','sizes','colors'));
     }
 
     /**
