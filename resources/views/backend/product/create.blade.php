@@ -32,7 +32,7 @@
         @endif
         <div class="sa-entity-layout" data-sa-container-query='{"920":"sa-entity-layout--size--md","1100":"sa-entity-layout--size--lg"}'>
             <div class="sa-entity-layout__body">
-                <div class="sa-entity-layout__main">
+                <div class="sa-entity-layout__main"> 
                     <div class="card">
                         <div class="card-body p-5">
                             <div class="mb-5"><h2 class="mb-0 fs-exact-18">Basic information</h2></div>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="form-product/description" class="form-label">Description</label>
-                                <textarea name="description" id="form-product/description" class="sa-quill-control form-control" rows="8" placeholder="Enter Description">{{ old('description') }}</textarea>  
+                                <textarea name="description" id="form-product/description" class="form-control" rows="8" placeholder="Enter Description">{{ old('description') }}</textarea>  
                             </div> 
                         </div>
                     </div>

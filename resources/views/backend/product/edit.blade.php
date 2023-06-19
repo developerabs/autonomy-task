@@ -20,6 +20,7 @@
         </div> 
        <form action="{{ route('products.update', $product->id)  }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('put')
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -45,7 +46,7 @@
                             </div>
                             <div class="mb-4">
                                 <label for="form-product/description" class="form-label">Description</label>
-                                <textarea name="description" id="form-product/description" class="sa-quill-control form-control" rows="8" placeholder="Enter Description">{{ $product->description }}</textarea>  
+                                <textarea name="description" id="form-product/description" class="form-control" rows="8" placeholder="Enter Description">{{ $product->description }}</textarea>  
                             </div> 
                         </div>
                     </div>
@@ -87,7 +88,7 @@
                                 <div class="row mb-4">
                                     <label for="formGroupExampleInput" class="col-sm-2 form-label">Thumbnail*</label> 
                                     <div class="col-sm-10"><input name="thumbnail_img" onchange="loadFile(event)" type="file" class="form-control" accept=".jpg,.jpeg,.png"/></div>
-                                    <img id="loadImage" src="" alt="" srcset="" style="width: 180px; marrgin-left:40px">
+                                    <img id="loadImage" src="{{asset('storage/'.$product->thumbnail_img)}}" alt="" srcset="" style="width: 180px; marrgin-left:40px">
                                 </div>
                                 <div class="row mb-4">
                                     <label for="formGroupExampleInput" class="col-sm-2 form-label">Photos</label> 
