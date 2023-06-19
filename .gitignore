@@ -3,8 +3,7 @@
 .env.php
 /node_modules 
 /storage
-/vendor 
-/DB 
+/vendor  
 .idea/
   
 .env 
