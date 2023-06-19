@@ -63,6 +63,23 @@
                                         <?php echo $product->status == 1 ? '<span class="badge badge-sa-pill badge-sa-success">Active</span>' : '<span class="badge badge-sa-pill badge-sa-warning">Inactive</span>'; ?>
                                     </td>
                                     <td>
+                                    {{-- product details button --}}
+                                    <a href="{{ route('products.show',$product->id) }}" class="btn btn-info btn-sm" style="float:left">
+                                        <svg
+                                            width="1em"
+                                            height="1em"
+                                            viewBox="0 0 24 24"
+                                            class="octicon octicon-checklist"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M3.5 3.75a.25.25 0 01.25-.25h13.5a.25.25 0 01.25.25v10a.75.75 0 001.5 0v-10A1.75 1.75 0 0017.25 2H3.75A1.75 1.75 0 002 3.75v16.5c0 .966.784 1.75 1.75 1.75h7a.75.75 0 000-1.5h-7a.25.25 0 01-.25-.25V3.75z"
+                                            ></path>
+                                            <path
+                                                d="M6.25 7a.75.75 0 000 1.5h8.5a.75.75 0 000-1.5h-8.5zm-.75 4.75a.75.75 0 01.75-.75h4.5a.75.75 0 010 1.5h-4.5a.75.75 0 01-.75-.75zm16.28 4.53a.75.75 0 10-1.06-1.06l-4.97 4.97-1.97-1.97a.75.75 0 10-1.06 1.06l2.5 2.5a.75.75 0 001.06 0l5.5-5.5z"
+                                            ></path>
+                                        </svg>
+                                    </a>
                                     {{-- product edit button --}}
                                     <a href="{{ route('products.edit',$product->id) }}" class="btn btn-primary btn-sm" style="float:left">
                                         <svg
@@ -81,7 +98,8 @@
                                                 d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"
                                             ></path>
                                             <line x1="2" y1="20" x2="2.01" y2="20"></line>
-                                        </svg></a>
+                                        </svg>
+                                    </a>
                                     {{-- product delete button  --}}
                                     <form action="{{ route('products.destroy',$product->id) }}" method="post" onsubmit="return confirm('Do you want to delete this?')">
                                         @csrf
@@ -106,7 +124,7 @@
                             
                         </tbody>
                     </table>
-                    {{-- <div class="mt-4">{{ $categories->links('pagination::bootstrap-4') }}</div> --}}
+                    <div class="mt-4">{{ $products->links('pagination::bootstrap-4') }}</div>
                 </div>
              
               
