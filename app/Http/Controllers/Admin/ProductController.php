@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductReuest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ use App\Models\Category;
 use App\Models\ProductCategory;
 use App\Models\Size;
 use App\Models\Color;
-use App\Traits\UploadTrait;
+use App\Traits\UploadTrait; 
 
 class ProductController extends Controller
 {
@@ -59,7 +60,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreProductReuest $request)
-    {   
+    {    
         DB::beginTransaction();
   
         try {
@@ -165,9 +166,82 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        return $id;
+        DB::beginTransaction();
+  
+        try {
+            // update products 
+            $product = Product::findOrFail($id);
+            $product->name = $request->name;
+            $product->slug = Str::slug($request->name); 
+            $product->unit_price = $request->unit_price;
+            $product->purchase_price = $request->purchase_price;
+            $product->stock = $request->stock;
+            $product->title = $request->title;
+            $product->description = $request->description;
+            $product->status = $request->status;
+            $product->unit = $request->unit;
+            $product->min_qty = $request->min_qty;
+            
+            // product thumbnail image upload
+            if ($request->hasFile('thumbnail_img')) { 
+                $this->deleteFile($product->thumbnail_img);
+                  $path = $this->UploadFile($request->file('thumbnail_img'), 'Products'); 
+                  $product->thumbnail_img = $path;
+            } 
+          
+
+            // products photos upload 
+            $files = [];
+            if ($request->hasFile('photo')) {
+                // multiple images upload 
+                  foreach ($request->file('photo') as $key => $file) { 
+                      $path = $this->UploadFile($file, 'Products');
+      
+                      //reformat the file details
+                      array_push($files, [
+                          'path' => $path,
+                      ]);
+                  }
+                  $product->photo = $files;
+            }   
+
+            if ($request->size != null) {
+                $product->size = $request->size;
+            }
+            if ($request->color != null) {
+                $product->color = $request->color;
+            }
+            $product->save();
+
+            // update product category  
+            $collection = ProductCategory::where('product_id', $id)->get(['id']);
+            // return $collection;
+            ProductCategory::destroy($collection->toArray());
+ 
+
+            foreach ($request->categories as $category) {
+                $productCategory = new ProductCategory();
+                $productCategory->product_id = $product->id;
+                $productCategory->category_id = $category;
+                $productCategory->save();
+            }
+            
+ 
+            DB::commit();
+              
+        } catch (Exception $e) {
+   
+            DB::rollback();
+            throw $e;
+        }
+
+        $notification = array(
+            'message' => 'Updated Successfully',
+            'alert-type' => 'success' 
+        );
+        return redirect()->route('products.index')->with($notification);
     }
 
     /**
@@ -178,7 +252,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
         $product->delete();
 
         $notification = array(
