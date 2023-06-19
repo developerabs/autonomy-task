@@ -19,7 +19,16 @@
             </div>
         </div>
         <div class="card"> 
-            <form action="{{ route('categories.index') }}" method="get"><input name="search" value="{{ request('search') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...."/></form>
+            <form action="{{ route('categories.index') }}" method="get">
+                <div class="row m-4">
+                    <div class="col-sm-8"> 
+                        <input name="search" value="{{ request('search') }}" type="text" class="form-control" id="formGroupExampleInput" placeholder="Search...."/>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
             <div class="sa-example my-5">
                 <div class="sa-example__legend">All Categories</div>
                 <div class="sa-example__body">
