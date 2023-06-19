@@ -13,9 +13,11 @@ use App\Models\Category;
 use App\Models\ProductCategory;
 use App\Models\Size;
 use App\Models\Color;
+use App\Traits\UploadTrait;
 
 class ProductController extends Controller
 {
+    use UploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -72,10 +74,28 @@ class ProductController extends Controller
             $product->title = $request->title;
             $product->description = $request->description;
             $product->status = $request->status;
-            $product->thumbnail_img = "image.png";
             $product->unit = $request->unit;
             $product->min_qty = $request->min_qty;
-    
+            
+            // product thumbnail image upload
+            $path = $this->UploadFile($request->file('thumbnail_img'), 'Products'); 
+            $product->thumbnail_img = $path;
+
+            // products photos upload 
+            $files = [];
+            if ($request->hasFile('photo')) {
+                // multiple images upload 
+                  foreach ($request->file('photo') as $key => $file) { 
+                      $path = $this->UploadFile($file, 'Products');
+      
+                      //reformat the file details
+                      array_push($files, [
+                          'path' => $path,
+                      ]);
+                  }
+                  $product->photo = $files;
+            }   
+
             if ($request->size != null) {
                 $product->size = $request->size;
             }
@@ -117,7 +137,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::with('categories')->findOrFail($id);
+        return view('backend.product.show', compact('product'));
     }
 
     /**
@@ -129,11 +150,12 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::with('categories')->findOrFail($id);
+        $category_ids = $product->categories->pluck('id')->toArray();
         $categories = Category::with('subCategoriy')->where('parent_id', '=', 0)->get();
         $sizes = Size::get();
         $colors = Color::get();
         // return $product;
-        return view('backend.product.edit', compact('product','categories','sizes','colors'));
+        return view('backend.product.edit', compact('product','categories','sizes','colors','category_ids'));
     }
 
     /**
@@ -145,7 +167,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $id;
     }
 
     /**

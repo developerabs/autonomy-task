@@ -14,7 +14,7 @@ class Product extends Model
     
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'added_by', 'user_id', 'unit_price', 'purchase_price', 'stock', 'size', 'color', 'photos', 'thumbnail_img', 'tags','featured','unit','min_qty','discount','shipping_cost','title','description','slug','status'] ; 
+    protected $fillable = ['name', 'added_by', 'user_id', 'unit_price', 'purchase_price', 'stock', 'size', 'color', 'photo', 'thumbnail_img', 'tags','featured','unit','min_qty','discount','shipping_cost','title','description','slug','status'] ; 
 
     // size mutator
     public function setSizeAttribute($value){
@@ -29,6 +29,13 @@ class Product extends Model
     }
     public function getColorAttribute($value){
         return $this->attributes['color'] = json_decode($value);
+    }
+    // photo mutator 
+    public function setPhotoAttribute($value){
+        return $this->attributes['photo'] = json_encode($value);
+    }
+    public function getPhotoAttribute($value){
+        return $this->attributes['photo'] = json_decode($value);
     }
     /**
      * The category that belong to the Product 

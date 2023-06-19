@@ -30,6 +30,7 @@ class StoreProductReuest extends FormRequest
             'stock' => 'required',
             'unit' => 'required',
             'min_qty' => 'required',
+            'thumbnail_img' => 'required',
         ];
     }
 }
